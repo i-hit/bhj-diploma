@@ -22,23 +22,47 @@ class TransactionsWidget {
    * кнопки «Новый доход» и «Новый расход».
    * При нажатии вызывает Modal.open() для
    * экземпляра окна
-   * Если нет счета - то реакции нет
+   * Если нет счетв - показать подсказку
    * */
   registerEvents() {
-    const inc = document.querySelector(".create-income-button");
-    const dec = document.querySelector(".create-expense-button");
+    const transactionsPanel = document.querySelector(".transactions-panel");
+    const tooltip = document.createElement("div");
+    tooltip.textContent = "Нужно создать счет";
+    tooltip.classList.add("tooltip");
+    let timer;
 
-    inc.addEventListener("click", (e) => {
-      if (document.querySelectorAll(".account").length) {
-        e.preventDefault();
-        App.getModal("newIncome").open();
-      }
-    });
+    transactionsPanel.addEventListener("click", (e) => {
+      e.preventDefault();
 
-    dec.addEventListener("click", (e) => {
       if (document.querySelectorAll(".account").length) {
-        e.preventDefault();
-        App.getModal("newExpense").open();
+        document.querySelector(".tooltip_active");
+        tooltip.remove();
+
+        if (e.target.closest(".create-income-button")) {
+          App.getModal("newIncome").open();
+        }
+
+        if (e.target.closest(".create-expense-button")) {
+          App.getModal("newExpense").open();
+        }
+      } else {
+        if (e.target.classList.contains("tooltip_active")) return;
+
+        clearTimeout(timer);
+
+        tooltip.classList.add("tooltip_active");
+
+        const elRect = e.target.closest(".btn").getBoundingClientRect();
+        tooltip.setAttribute(
+          "style",
+          `left: ${elRect.right}px; top: ${elRect.bottom}px`
+        );
+        e.target.insertAdjacentElement("afterEnd", tooltip);
+
+        timer = setTimeout(() => {
+          document.querySelector(".tooltip_active");
+          tooltip.classList.remove("tooltip_active");
+        }, 3000);
       }
     });
   }

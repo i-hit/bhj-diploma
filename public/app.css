@@ -75,3 +75,22 @@
 .transaction__controls {
   line-height: 70px;
 }
+
+.tooltip {
+  position: fixed;
+  display: none;
+  background: black;
+  padding: 5px;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  opacity: 1;
+}
+
+.tooltip_active {
+  display: block;
+}
+
+.btn-block:nth-of-type(n + 2) {
+  margin-top: 5px;
+}

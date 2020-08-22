@@ -66,6 +66,8 @@ class TransactionsPage {
         }
       });
       this.clear();
+    } else {
+      alert("Сначала нужно выбрать счет");
     }
   }
 
