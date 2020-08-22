@@ -10,8 +10,11 @@ class UserWidget {
    * Если переданный элемент не существует,
    * необходимо выкинуть ошибку.
    * */
-  constructor( element ) {
-
+  constructor(element) {
+    if (!element) {
+      throw new Error("Элемент не задан");
+    }
+    this.element = element;
   }
 
   /**
@@ -22,6 +25,8 @@ class UserWidget {
    * авторизованного пользователя
    * */
   update() {
-
+    if (User.current()) {
+      document.querySelector(".user-name").textContent = User.current().name;
+    }
   }
 }
