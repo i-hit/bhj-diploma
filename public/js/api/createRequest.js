@@ -16,6 +16,7 @@ const createRequest = (options = {}) => {
     for (let item in options.data) {
       options.url += `${item}=${options.data[item]}&`;
     }
+    options.url = options.url.slice(0, -1);
   } else {
     for (let item in options.data) {
       formData.append(item, options.data[item]);
